@@ -1,3 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-Console.WriteLine("Hello, World!");
+using Modeling_Console;
+
+Pipeline pipeline = new Pipeline();
+pipeline.StartWOBuffer(1000,5);
