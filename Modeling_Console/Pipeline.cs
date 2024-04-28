@@ -3,6 +3,7 @@ namespace Modeling_Console;
 public class Pipeline
 {
     Random random = new Random();
+    
     public void StartWOBuffer(int time, int numOfDevices)
     {
         //Список всех деталей
@@ -12,7 +13,7 @@ public class Pipeline
         //Список обслуженных деталей
         List<Detail> usedDetails = new();
         
-        Detail[] detailOnPipeline = new Detail[numOfDevices];
+        Detail[][] detailOnPipeline = new Detail[numOfDevices][];
         
         List<Device> devices = new();
         
@@ -22,7 +23,6 @@ public class Pipeline
         
         for (int i = 0; i < time; i++)
         {
-            allDetails = SetRequest(allDetails);
             
             //Работа станков в течении минуты
             foreach (var device in devices)
@@ -40,14 +40,9 @@ public class Pipeline
             
             //Cмещение деталей и добавление их на конвейер
             if (CheckPipeIsEmpty(detailOnPipeline))
-            {
-                //Добавление детали на конвейер если конвейер пустой с конца
+            {    //Добавление детали на конвейер если конвейер пустой с конца
                 if (detailOnPipeline[0] == null)
-                {
-                    allDetails[0].MovePosition();
-                    detailOnPipeline[0] = allDetails[0];
-                    allDetails.RemoveAt(0);
-                }
+                    detailOnPipeline[0] = SetRequest();
             }
             else
             {
@@ -65,22 +60,19 @@ public class Pipeline
                 {
                     if (detailOnPipeline[j] != null)
                     {
-
                         if (j == detailOnPipeline.Length - 1)
                         {
-                            rejectionDetails.Add(detailOnPipeline[j]);
+                            for (int k = 0; k < detailOnPipeline[j].Length; k++)
+                                rejectionDetails.Add(detailOnPipeline[j][k]);
+                            
                             detailOnPipeline[j] = null;
                             continue;
                         }
-                        
-                        detailOnPipeline[j].MovePosition();
                         detailOnPipeline[j + 1] = detailOnPipeline[j];
                         detailOnPipeline[j] = null;
                     }
                 }
-                allDetails[0].MovePosition();
-                detailOnPipeline[0] = allDetails[0];
-                allDetails.RemoveAt(0);
+                detailOnPipeline[0] = SetRequest();
             }
             
             //Загрузка деталей на станок
@@ -90,18 +82,24 @@ public class Pipeline
                 {
                     if (detailOnPipeline[j] != null)
                     {
-                        devices[j] = SetExpTime(devices[j], detailOnPipeline[j]);
-                        detailOnPipeline[j] = null;
+                        devices[j] = SetExpTime(devices[j], detailOnPipeline[j][0]);
+                        detailOnPipeline[j] = ChangeRequest(detailOnPipeline[j]);
                     }
                 }
             }
+            
         }
         
         for (int j = 0; j < devices.Count; j++)
         {
-            if (devices[j].State == true)
-            {
+            if (devices[j].State == true) 
                 allDetails.Add(devices[j].DetailOnDevice);
+            
+
+            if (detailOnPipeline[j] != null)
+            {
+                for (int d = 0; d < detailOnPipeline[j].Length; d++)
+                    allDetails.Add(detailOnPipeline[j][d]);
             }
         }
         Console.WriteLine("Заявок необработано " + allDetails.Count);
@@ -112,12 +110,27 @@ public class Pipeline
     
     
     //Добавляет детали в список каждую минуту с равномерным распределением от 0 до 4
-    public List<Detail> SetRequest(List<Detail> allDetails)
+    public Detail[] SetRequest()
     {
         int countDetailsPerMinute = random.Next(1, 5);
+        Detail[] tempDetails = new Detail[countDetailsPerMinute];
+        
         for (int j = 0; j < countDetailsPerMinute; j++)
-            allDetails.Add(new Detail());
-        return allDetails;
+            tempDetails[j] = new Detail();
+        
+        return tempDetails;
+    }
+
+    //Изменяет количество деталей на ленте
+    public Detail[] ChangeRequest(Detail[] request)
+    {
+        Detail[] tempDetails = request.Reverse().ToArray();
+        Array.Resize(ref tempDetails,tempDetails.Length - 1);
+        
+        if (tempDetails.Length == 0)
+            return null;
+        
+        return tempDetails.Reverse().ToArray();
     }
     
     
@@ -128,11 +141,12 @@ public class Pipeline
         int time = Convert.ToInt32(
             Math.Ceiling(
                  (-MathExpectation) * Math.Log(random.NextDouble())));
+        
         device.SetWork(detail, time);
         return device;
     }
 
-    public bool CheckPipeIsEmpty(Detail[] detailOnPipeline)
+    public bool CheckPipeIsEmpty(Detail[][] detailOnPipeline)
     {
         for (int i = 0; i < detailOnPipeline.Length; i++)
         {
@@ -141,42 +155,4 @@ public class Pipeline
         }
         return true;
     }
-    
-    
-    /*
-     //Смотреть промежуточное
-            Console.WriteLine($"-------------------------shag: {i}------------------------------");
-            string conv = "";
-            string dit = "";
-            string tvow = "";
-            foreach (var VARIABLE in devices)
-            {
-                int sta = 0;
-                if (VARIABLE.State == true)
-                    sta = 1;
-                tvow += " " + VARIABLE.TimeOfWork;
-                dit += " " + sta;
-            }
-            Console.WriteLine(tvow);
-            Console.WriteLine(dit);
-            foreach (var VARIABLE in detailOnPipeline)
-            {
-                int sta = 0;
-                if (VARIABLE != null)
-                    sta = 1;
-                conv += " " + sta;
-            }
-            Console.WriteLine(conv + "\n");
-     */
-    
-    
-    /*
-     * //Самая первая заявка
-           if (i == 0)
-           {
-               devices[0] = SetExpTime(devices[0], allDetails[0]);
-               allDetails.RemoveAt(0);
-               continue;
-           }*/
-
 }
