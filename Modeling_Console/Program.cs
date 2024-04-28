@@ -3,4 +3,4 @@
 using Modeling_Console;
 
 Pipeline pipeline = new Pipeline();
-pipeline.StartWOBuffer(1000,5);
+pipeline.StartWOBuffer(100,5);
