@@ -4,7 +4,7 @@ using Modeling_Console;
 
 Pipeline pipeline = new Pipeline();
 pipeline.StartWOBuffer(1000,5);
-
+pipeline.StartWithBuffer(1000,5);
 
 
 

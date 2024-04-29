@@ -1,21 +1,21 @@
 namespace Modeling_Console;
 
-public class Detail
+public class Detail : ICloneable
 {
-    private bool isServiced = false;
     private int position = -1;
-    public bool IsServiced
-    {
-        get => isServiced;
-        private set => isServiced = value;
-    }
-
     public int Position
     {
         get => position;
         set => position = value;
     }
-
+    
+    public Detail(){}
+    Detail(int position)
+    {
+        Position = position;
+    }
 
     public void MovePosition() => Position += 1;
+    public object Clone() => new Detail(Position);
+    
 }
