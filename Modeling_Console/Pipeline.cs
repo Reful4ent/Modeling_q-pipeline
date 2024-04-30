@@ -115,7 +115,7 @@ public class Pipeline
         statistics.countUsedDetails = usedDetails.Count;
     }
     
-    public void StartWithBuffer(int time, int countOfDevices)
+    public void StartWithBuffer(int time, int countOfDevices, int bufferSize)
     { 
         //Список всех деталей
         List<Detail> unprocessedDetails = new ();
@@ -132,7 +132,7 @@ public class Pipeline
         for (int i = 0; i < countOfDevices; i++)
         {
             devices.Add(new Device());
-            buffers.Add(new Buffer());
+            buffers.Add(new Buffer(bufferSize));
         }
         
         for (int i = 0; i < time; i++)
@@ -191,7 +191,7 @@ public class Pipeline
 
             //Перекладывание детали из буфера на станок
             for (int j = 0; j < buffers.Count; j++)
-                if (devices[j].State == false && buffers[j].State == true)
+                if (devices[j].State == false && buffers[j].DetailInBuffer.Count != 0)
                     devices[j] = SetExpTime(devices[j], buffers[j].PullOutDetail());
             
             
@@ -215,8 +215,13 @@ public class Pipeline
                 {
                     if (detailOnPipeline[j] != null)
                     {
-                        buffers[j].PutDetail(detailOnPipeline[j][0]);
-                        detailOnPipeline[j] = ChangeRequest(detailOnPipeline[j]);
+                        while (buffers[j].State != true)
+                        {
+                            if(detailOnPipeline[j] == null)
+                                break;
+                            if(buffers[j].PutDetail(detailOnPipeline[j][0])) 
+                                detailOnPipeline[j] = ChangeRequest(detailOnPipeline[j]);
+                        }
                     }
                 }
             }
@@ -233,9 +238,10 @@ public class Pipeline
                 for (int d = 0; d < detailOnPipeline[j].Length; d++)
                     unprocessedDetails.Add(detailOnPipeline[j][d]);
             }
-            
-            if(buffers[j].State == true)
-                unprocessedDetails.Add(buffers[j].PullOutDetail());
+
+            if (buffers[j].State == true)
+                while (buffers[j].DetailInBuffer.Count!=0)
+                    unprocessedDetails.Add(buffers[j].PullOutDetail());
         }
         statistics.countRejectionDetails = rejectionDetails.Count;
         statistics.countUnprocessedDetails = unprocessedDetails.Count;

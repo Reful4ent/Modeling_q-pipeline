@@ -3,7 +3,13 @@ namespace Modeling_Console;
 public class Buffer
 {
     private bool state = false;
-    private Detail detailInBuffer;
+    private int bufferSize = 0;
+    private Queue<Detail> detailInBuffer = new();
+
+    public Buffer(int bufferSize)
+    {
+        this.bufferSize = bufferSize;
+    }
     
     public bool State
     {
@@ -11,23 +17,26 @@ public class Buffer
         private set => state = value;
     }
 
-    public Detail DetailInBuffer
+    public Queue<Detail> DetailInBuffer
     {
         get => detailInBuffer;
         private set => detailInBuffer = value;
     }
 
 
-    public void PutDetail(Detail detail)
+    public bool PutDetail(Detail detail)
     {
-        DetailInBuffer = detail;
-        State = true;
+        if (detailInBuffer.Count == bufferSize)
+            return false;
+        DetailInBuffer.Enqueue(detail);
+        if(detailInBuffer.Count == bufferSize)
+            State = true;
+        return true;
     }
 
     public Detail PullOutDetail()
     {
-        Detail temp = (Detail)DetailInBuffer.Clone();
-        DetailInBuffer = null;
+        Detail temp = (Detail)DetailInBuffer.Dequeue().Clone();
         State = false;
         return temp;
     }
