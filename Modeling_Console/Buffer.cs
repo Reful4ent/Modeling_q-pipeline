@@ -9,6 +9,8 @@ public class Buffer
     public Buffer(int bufferSize)
     {
         this.bufferSize = bufferSize;
+        if (this.bufferSize == 0)
+            State = true;
     }
     
     public bool State
