@@ -3,21 +3,28 @@ namespace Modeling_Console;
 public class Pipeline
 {
     Random random = new Random();
+
+    public Statistics statistics;
+
+    public Pipeline(Statistics statistics)
+    {
+        this.statistics = statistics;
+    }
     
-    public void StartWOBuffer(int time, int numOfDevices)
+    public void StartWOBuffer(int time, int countOfDevices)
     {
         //Список всех деталей
-        List<Detail> allDetails = new ();
+        List<Detail> unprocessedDetails  = new ();
         //Список деталей отказа
         List<Detail> rejectionDetails = new();
         //Список обслуженных деталей
         List<Detail> usedDetails = new();
         
-        Detail[][] detailOnPipeline = new Detail[numOfDevices][];
+        Detail[][] detailOnPipeline = new Detail[countOfDevices][];
         
         List<Device> devices = new();
         
-        for (int i = 0; i < numOfDevices; i++)
+        for (int i = 0; i < countOfDevices; i++)
             devices.Add(new Device());
         
         
@@ -84,6 +91,7 @@ public class Pipeline
                     {
                         devices[j] = SetExpTime(devices[j], detailOnPipeline[j][0]);
                         detailOnPipeline[j] = ChangeRequest(detailOnPipeline[j]);
+                        statistics.TimeWorkingDiveces[j].Add(devices[j].TimeOfWork);
                     }
                 }
             }
@@ -93,36 +101,35 @@ public class Pipeline
         for (int j = 0; j < devices.Count; j++)
         {
             if (devices[j].State == true) 
-                allDetails.Add(devices[j].DetailOnDevice);
+                unprocessedDetails.Add(devices[j].DetailOnDevice);
             
 
             if (detailOnPipeline[j] != null)
             {
                 for (int d = 0; d < detailOnPipeline[j].Length; d++)
-                    allDetails.Add(detailOnPipeline[j][d]);
+                    unprocessedDetails.Add(detailOnPipeline[j][d]);
             }
         }
-        Console.WriteLine("Заявок необработано " + allDetails.Count);
-        Console.WriteLine("Обработанные заявки " + usedDetails.Count);
-        Console.WriteLine("Отказанные заявки " + rejectionDetails.Count);
-        Console.WriteLine("Заявок всего: " + (allDetails.Count+usedDetails.Count()+rejectionDetails.Count()));
+        statistics.countRejectionDetails = rejectionDetails.Count;
+        statistics.countUnprocessedDetails = unprocessedDetails.Count;
+        statistics.countUsedDetails = usedDetails.Count;
     }
     
-    public void StartWithBuffer(int time, int numOfDevices)
+    public void StartWithBuffer(int time, int countOfDevices)
     { 
         //Список всех деталей
-        List<Detail> allDetails = new ();
+        List<Detail> unprocessedDetails = new ();
         //Список деталей отказа
         List<Detail> rejectionDetails = new();
         //Список обслуженных деталей
         List<Detail> usedDetails = new();
         
-        Detail[][] detailOnPipeline = new Detail[numOfDevices][];
+        Detail[][] detailOnPipeline = new Detail[countOfDevices][];
         
         List<Device> devices = new();
         List<Buffer> buffers = new();
 
-        for (int i = 0; i < numOfDevices; i++)
+        for (int i = 0; i < countOfDevices; i++)
         {
             devices.Add(new Device());
             buffers.Add(new Buffer());
@@ -218,22 +225,21 @@ public class Pipeline
         for (int j = 0; j < devices.Count; j++)
         {
             if (devices[j].State == true) 
-                allDetails.Add(devices[j].DetailOnDevice);
+                unprocessedDetails.Add(devices[j].DetailOnDevice);
             
 
             if (detailOnPipeline[j] != null)
             {
                 for (int d = 0; d < detailOnPipeline[j].Length; d++)
-                    allDetails.Add(detailOnPipeline[j][d]);
+                    unprocessedDetails.Add(detailOnPipeline[j][d]);
             }
             
             if(buffers[j].State == true)
-                allDetails.Add(buffers[j].PullOutDetail());
+                unprocessedDetails.Add(buffers[j].PullOutDetail());
         }
-        Console.WriteLine("Заявок необработано " + allDetails.Count);
-        Console.WriteLine("Обработанные заявки " + usedDetails.Count);
-        Console.WriteLine("Отказанные заявки " + rejectionDetails.Count);
-        Console.WriteLine("Заявок всего: " + (allDetails.Count+usedDetails.Count()+rejectionDetails.Count()));
+        statistics.countRejectionDetails = rejectionDetails.Count;
+        statistics.countUnprocessedDetails = unprocessedDetails.Count;
+        statistics.countUsedDetails = usedDetails.Count;
     }
 
     #region Methods_For_Working_With_Pipeline
@@ -282,8 +288,5 @@ public class Pipeline
         }
         return true;
     }
-
-    
-
     #endregion
 }

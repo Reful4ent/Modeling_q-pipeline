@@ -6,7 +6,7 @@ public class Detail : ICloneable
     public int Position
     {
         get => position;
-        set => position = value;
+        private set => position = value;
     }
     
     public Detail(){}

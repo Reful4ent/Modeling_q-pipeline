@@ -5,14 +5,13 @@ public class Device
     private bool state = false;
     private int timeOfWork = 0;
     private Detail detailOnDevice;
-    
-    
+
+    #region Properties
     public bool State
     {
         get => state;
         private set => state = value;
     }
-
     public int TimeOfWork
     {
         get => timeOfWork;
@@ -23,6 +22,8 @@ public class Device
         get => detailOnDevice;
         private set => detailOnDevice = value;
     }
+    #endregion
+    
 
     public void SetWork(Detail detail, int timeOfWork)
     {
@@ -30,7 +31,7 @@ public class Device
         TimeOfWork = timeOfWork;
         State = true;
     }
-
+    
     public void MoveTime()
     {
         TimeOfWork -= 1;
@@ -40,6 +41,6 @@ public class Device
             State = false;
         }
     }
-
+    
     public void RemoveDetail() => DetailOnDevice = null;
 }

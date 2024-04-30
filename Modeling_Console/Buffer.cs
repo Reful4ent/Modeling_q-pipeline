@@ -8,13 +8,13 @@ public class Buffer
     public bool State
     {
         get => state;
-        set => state = value;
+        private set => state = value;
     }
 
     public Detail DetailInBuffer
     {
         get => detailInBuffer;
-        set => detailInBuffer = value;
+        private set => detailInBuffer = value;
     }
 
 
