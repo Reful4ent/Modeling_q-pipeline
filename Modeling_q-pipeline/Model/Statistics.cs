@@ -16,6 +16,7 @@ public class Statistics
 
     public Action<List<List<int>>>? TimeWorkingStatitsticsGet;
     public Action<Dictionary<int, double>>? EffectivityStatisticsGet;
+    public Action<string>? TextStatisticGet;
 
     public bool IsGettedStatistic
     {
@@ -50,7 +51,20 @@ public class Statistics
         PercentRejectionDetails = (double)countRejectionDetails /(double) countAllDetails;
         PercentUsedDetails = (double)countUsedDetails / (double)countAllDetails;
         IsGettedStatistic = true;
+
+        string textIngformation = $"Заявок не обработано: {countUnprocessedDetails}\n" +
+                                  $"Обработанные заявки  + {countUsedDetails}\n" +
+                                  $"Отказанные заявки  {countRejectionDetails}\n" +
+                                  $"Заявок всего: {countAllDetails}\n" +
+                                  $"Процент обработанных заявок: {PercentUsedDetails}\n" +
+                                  $"Процент отказанных заявок: {PercentRejectionDetails}\n" +
+                                  $"Процент не обработанных заявок: {PercentUnprocessedDetails}\n \n";
+        
+        
+        
+        
         TimeWorkingStatitsticsGet?.Invoke(TimeWorkingDiveces);
+        TextStatisticGet?.Invoke(textIngformation);
         EffectivityStatisticsGet?.Invoke(EffectivityStatistics);
     }
 

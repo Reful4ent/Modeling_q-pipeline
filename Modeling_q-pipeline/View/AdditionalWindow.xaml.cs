@@ -29,4 +29,10 @@ public partial class AdditionalWindow : Window
         e.Cancel = true;
         this.Visibility = Visibility.Hidden;
     }
+
+    public void Clear()
+    {
+        WpfPlot.Plot.Clear();
+        WpfPlot.Refresh();
+    }
 }

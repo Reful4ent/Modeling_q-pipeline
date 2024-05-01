@@ -21,14 +21,17 @@ public partial class MainWindow : Window
     private Statistics statistics;
     private Pipeline pipeline;
     private AdditionalWindow additionalWindow;
+    private TextStatisticWindow textStatisticWindow;
     public MainWindow()
     {
         InitializeComponent();
         statistics = new Statistics();
         pipeline = new Pipeline(statistics);
         additionalWindow = new AdditionalWindow();
+        textStatisticWindow = new TextStatisticWindow();
         statistics.EffectivityStatisticsGet += DrawDots;
-        //statistics.TimeWorkingStatitsticsGet += SetOtherStatistics;
+        statistics.TimeWorkingStatitsticsGet += SetOtherStatistics;
+        statistics.TextStatisticGet += SetTextStatistic;
         Graphics.Plot.XLabel("Время моделирования");
         Graphics.Plot.YLabel("Процент обработанных заявок");
     }
@@ -40,7 +43,6 @@ public partial class MainWindow : Window
         int bufferSize = Convert.ToInt32(Modeling_BufSize.Text.ToString());
         statistics.SetStartStatistics(countOfDevices);
         await pipeline.Start(time, countOfDevices, bufferSize);
-        SetOtherStatistics(statistics.TimeWorkingDiveces);
         statistics.SetMainStatistics();
     }
 
@@ -60,18 +62,13 @@ public partial class MainWindow : Window
     {
         additionalWindow.GetStatistic(TimeWorkingStatitstics);
     }
-    /*
-     * Console.WriteLine("Заявок не обработано " + statistics.countUnprocessedDetails);
-        Console.WriteLine("Обработанные заявки " + statistics.countUsedDetails);
-        Console.WriteLine("Отказанные заявки " + statistics.countRejectionDetails);
-        Console.WriteLine("Заявок всего: " + statistics.countAllDetails);
-        statistics.SetMainStatistics();
-        Console.WriteLine(statistics.PercentUsedDetails);
-        Console.WriteLine(statistics.PercentRejectionDetails);
-        Console.WriteLine(statistics.PercentUnprocessedDetails);
-        Console.WriteLine();
-     */
-    private void MenuItem_OnClick(object sender, RoutedEventArgs e)
+
+    private void SetTextStatistic(string text)
+    {
+        textStatisticWindow.GetStatistic(text);
+    }
+    
+    private void MenuItemOthers_OnClick(object sender, RoutedEventArgs e)
     {
         additionalWindow.Show();
     }
@@ -80,5 +77,12 @@ public partial class MainWindow : Window
     {
         Graphics.Plot.Clear();
         Graphics.Refresh();
+        textStatisticWindow.Clear();
+        additionalWindow.Clear();
+    }
+
+    private void MenuItemStatistic_OnClick(object sender, RoutedEventArgs e)
+    {
+        textStatisticWindow.Show();
     }
 }

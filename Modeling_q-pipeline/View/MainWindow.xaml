@@ -18,7 +18,8 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" Grid.ColumnSpan="2">
-            <MenuItem Header="Другие графики" Click="MenuItem_OnClick"></MenuItem>
+            <MenuItem Header="Другие графики" Click="MenuItemOthers_OnClick"></MenuItem>
+            <MenuItem Header="Общая статистика" Click="MenuItemStatistic_OnClick"></MenuItem>
         </Menu>
         <Grid Grid.Column="0" Grid.Row="1">
             <Grid.RowDefinitions>

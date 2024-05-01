@@ -9,6 +9,10 @@
         Title="AdditionalWindow" Height="450" Width="800"
         Closing="AdditionalWindow_OnClosing">
     <Grid>
-        <ScottPlot:WpfPlot x:Name="WpfPlot"></ScottPlot:WpfPlot>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="30px"></RowDefinition>
+        </Grid.RowDefinitions>
+        <ScottPlot:WpfPlot Grid.Row="0" x:Name="WpfPlot"></ScottPlot:WpfPlot>
     </Grid>
 </Window>
