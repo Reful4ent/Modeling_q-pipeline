@@ -1,4 +1,4 @@
-namespace Modeling_Console;
+namespace Modeling_q_pipeline.Model;
 
 public class Statistics
 {
@@ -37,7 +37,8 @@ public class Statistics
         get => percentUnprocessedDetails;
         private set => percentUnprocessedDetails = value;
     }
-    public Statistics(int countOfDevices)
+    
+    public void SetStartStatistics(int countOfDevices)
     {
         for (int i = 0; i < countOfDevices; i++)
             TimeWorkingDiveces.Add(new List<int>());

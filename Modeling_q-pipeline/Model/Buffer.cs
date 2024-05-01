@@ -1,4 +1,4 @@
-namespace Modeling_Console;
+namespace Modeling_q_pipeline.Model;
 
 public class Buffer
 {

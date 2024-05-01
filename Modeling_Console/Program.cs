@@ -1,32 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using Modeling_Console;
-
-int countOfDevices = Convert.ToInt32(Console.ReadLine());
-int bufferSize = Convert.ToInt32(Console.ReadLine());
-Statistics statistics = new Statistics(countOfDevices);
-Pipeline pipeline = new Pipeline(statistics);
-pipeline.Start(1000,countOfDevices,0);
-Console.WriteLine("Заявок не обработано " + statistics.countUnprocessedDetails);
-Console.WriteLine("Обработанные заявки " + statistics.countUsedDetails);
-Console.WriteLine("Отказанные заявки " + statistics.countRejectionDetails);
-Console.WriteLine("Заявок всего: " + statistics.countAllDetails);
-statistics.SetMainStatistics();
-Console.WriteLine(statistics.PercentUsedDetails);
-Console.WriteLine(statistics.PercentRejectionDetails);
-Console.WriteLine(statistics.PercentUnprocessedDetails);
-Console.WriteLine();
-
-pipeline.Start(1000,countOfDevices,bufferSize);
-Console.WriteLine("Заявок не обработано " + statistics.countUnprocessedDetails);
-Console.WriteLine("Обработанные заявки " + statistics.countUsedDetails);
-Console.WriteLine("Отказанные заявки " + statistics.countRejectionDetails);
-Console.WriteLine("Заявок всего: " + statistics.countAllDetails);
-statistics.SetMainStatistics();
-Console.WriteLine(statistics.PercentUsedDetails);
-Console.WriteLine(statistics.PercentRejectionDetails);
-Console.WriteLine(statistics.PercentUnprocessedDetails);
-Console.WriteLine();
+﻿// See https://aka.ms/new-console-template for more informat
 
 
 

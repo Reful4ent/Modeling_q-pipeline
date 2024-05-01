@@ -1,0 +1,80 @@
+﻿<Window x:Class="Modeling_q_pipeline.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ScottPlot="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
+        xmlns:local="clr-namespace:Modeling_q_pipeline"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="200px"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20px"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0" Grid.ColumnSpan="2">
+            <MenuItem Header="Другие графики" Click="MenuItem_OnClick"></MenuItem>
+        </Menu>
+        <Grid Grid.Column="0" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="40px"></RowDefinition>
+            </Grid.RowDefinitions>
+            <ScottPlot:WpfPlot x:Name="Graphics" Grid.Row="0"></ScottPlot:WpfPlot>
+            <Button Grid.Row="1" Click="ClearPlot">Очистить таблицу</Button>
+        </Grid>
+        <Grid Grid.Column="1" Grid.Row="1">
+           <Grid.RowDefinitions>
+               <RowDefinition></RowDefinition>
+               <RowDefinition></RowDefinition>
+               <RowDefinition></RowDefinition>
+               <RowDefinition Height="40px"></RowDefinition>
+           </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="0.4*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" VerticalAlignment="Center">Время моделирования</TextBlock>
+                <TextBox Grid.Column="1"  x:Name="Modeling_Time"
+                         Height="30px"
+                         Margin="0 0 10 0"
+                         TextAlignment="Center"
+                         VerticalContentAlignment="Center"
+                         VerticalAlignment="Center"></TextBox>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="0.4*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" VerticalAlignment="Center">Количество устройств</TextBlock>
+                <TextBox Grid.Column="1" x:Name="Modeling_DevCount"
+                         Height="30px"
+                         Margin="0 0 10 0"
+                         TextAlignment="Center"
+                         VerticalContentAlignment="Center"
+                         VerticalAlignment="Center"></TextBox>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="0.4*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" VerticalAlignment="Center">Размер буфера</TextBlock>
+                <TextBox Grid.Column="1"   x:Name="Modeling_BufSize"
+                                          Height="30px"
+                                          Margin="0 0 10 0"
+                                          TextAlignment="Center"
+                                          VerticalContentAlignment="Center"
+                                          VerticalAlignment="Center"></TextBox>
+            </Grid>
+            <Button Grid.Row="3" Click="ButtonBase_OnClick">Смоделировать</Button>
+        </Grid>
+    </Grid>
+</Window>
