@@ -10,7 +10,7 @@ public class Pipeline
         this.statistics = statistics;
     }
     
-    public void StartWithBuffer(int time, int countOfDevices, int bufferSize)
+    public void Start(int time, int countOfDevices, int bufferSize)
     {
         countAllDetails = 0;
         if (statistics.IsGettedStatistic)
@@ -102,6 +102,7 @@ public class Pipeline
                     {
                         devices[j] = SetExpTime(devices[j], detailOnPipeline[j][0]);
                         detailOnPipeline[j] = ChangeRequest(detailOnPipeline[j]);
+                        statistics.TimeWorkingDiveces[j].Add(devices[j].TimeOfWork);
                     }
                 }
             }

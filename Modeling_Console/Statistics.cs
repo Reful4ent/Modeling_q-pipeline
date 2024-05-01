@@ -14,6 +14,8 @@ public class Statistics
     private double percentUsedDetails = 0;
     private bool isGettedStatistic = false;
 
+    public Action<List<List<int>>>? TimeWorkingStatitsticsGet;
+    public Action<Dictionary<int, double>>? EffectivityStatisticsGet;
 
     public bool IsGettedStatistic
     {
@@ -47,6 +49,8 @@ public class Statistics
         PercentRejectionDetails = (double)countRejectionDetails /(double) countAllDetails;
         PercentUsedDetails = (double)countUsedDetails / (double)countAllDetails;
         IsGettedStatistic = true;
+        TimeWorkingStatitsticsGet?.Invoke(TimeWorkingDiveces);
+        EffectivityStatisticsGet?.Invoke(EffectivityStatistics);
     }
 
     public void ResetStatistic(int countOfDevices)
