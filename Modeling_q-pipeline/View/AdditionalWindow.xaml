@@ -7,7 +7,8 @@
         xmlns:ScottPlot="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
         mc:Ignorable="d"
         Title="AdditionalWindow" Height="450" Width="800"
-        Closing="AdditionalWindow_OnClosing">
+        Closing="AdditionalWindow_OnClosing"
+        Icon="Img/bars.png">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>

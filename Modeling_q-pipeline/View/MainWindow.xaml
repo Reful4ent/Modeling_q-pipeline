@@ -7,7 +7,11 @@
         xmlns:local="clr-namespace:Modeling_q_pipeline"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Icon="Img/graphs.png">
+    <Window.Resources>
+        <ResourceDictionary Source="StylesFolder/Styles.xaml"></ResourceDictionary>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -27,7 +31,7 @@
                 <RowDefinition Height="40px"></RowDefinition>
             </Grid.RowDefinitions>
             <ScottPlot:WpfPlot x:Name="Graphics" Grid.Row="0"></ScottPlot:WpfPlot>
-            <Button Grid.Row="1" Click="ClearPlot">Очистить таблицу</Button>
+            <Button Grid.Row="1" Click="ClearPlot" Style="{StaticResource Button_style}">Очистить таблицу</Button>
         </Grid>
         <Grid Grid.Column="1" Grid.Row="1">
            <Grid.RowDefinitions>
@@ -75,7 +79,7 @@
                                           VerticalContentAlignment="Center"
                                           VerticalAlignment="Center"></TextBox>
             </Grid>
-            <Button Grid.Row="3" Click="ButtonBase_OnClick">Смоделировать</Button>
+            <Button Grid.Row="3" Click="ButtonBase_OnClick" Style="{StaticResource Button_style}">Смоделировать</Button>
         </Grid>
     </Grid>
 </Window>

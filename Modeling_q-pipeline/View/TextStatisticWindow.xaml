@@ -8,7 +8,8 @@
         Title="TextStatistic" Height="400" Width="350"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        Closing="TextStatistic_OnClosing">
+        Closing="TextStatistic_OnClosing"
+        Icon="Img/folder.png">
     <Grid>
         <ScrollViewer>
             <TextBlock  x:Name="TextStatisticInfo"

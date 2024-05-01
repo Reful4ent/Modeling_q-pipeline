@@ -19,6 +19,24 @@
         <XamlRuntime>Wpf</XamlRuntime>
         <SubType>Designer</SubType>
       </Page>
+      <Page Update="View\StylesFolder\Styles.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="View\Img\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="View\Img\Bars.png" />
+      <Resource Include="View\Img\Bars.png" />
+      <None Remove="View\Img\Folder.png" />
+      <Resource Include="View\Img\Folder.png" />
+      <None Remove="View\Img\Graphs.png" />
+      <Resource Include="View\Img\Graphs.png" />
     </ItemGroup>
 
 </Project>
