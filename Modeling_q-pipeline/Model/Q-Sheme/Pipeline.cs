@@ -3,9 +3,9 @@ namespace Modeling_q_pipeline.Model;
 public class Pipeline
 {
     private Random random = new Random();
-    private Statistics statistics;
+    private IStatistics statistics;
     public int countAllDetails = 0;
-    public Pipeline(Statistics statistics)
+    public Pipeline(IStatistics statistics)
     {
         this.statistics = statistics;
     }
@@ -147,10 +147,10 @@ public class Pipeline
                     while (buffers[j].DetailInBuffer.Count!=0)
                         unprocessedDetails.Add(buffers[j].PullOutDetail());
             }
-            statistics.countRejectionDetails = rejectionDetails.Count;
-            statistics.countUnprocessedDetails = unprocessedDetails.Count;
-            statistics.countUsedDetails = usedDetails.Count;
-            statistics.countAllDetails = countAllDetails;
+            statistics.CountRejectionDetails = rejectionDetails.Count;
+            statistics.CountUnprocessedDetails = unprocessedDetails.Count;
+            statistics.CountUsedDetails = usedDetails.Count;
+            statistics.CountAllDetails = countAllDetails;
         });
     }
     #region Methods_For_Working_With_Pipeline

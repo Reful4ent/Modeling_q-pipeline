@@ -18,14 +18,14 @@ namespace Modeling_q_pipeline;
 /// </summary>
 public partial class MainWindow : Window
 {
-    private Statistics statistics;
+    private IStatistics statistics;
     private Pipeline pipeline;
     private AdditionalWindow additionalWindow;
     private TextStatisticWindow textStatisticWindow;
     public MainWindow()
     {
         InitializeComponent();
-        statistics = new Statistics();
+        statistics = Statistics.Instance();
         pipeline = new Pipeline(statistics);
         additionalWindow = new AdditionalWindow();
         textStatisticWindow = new TextStatisticWindow();
