@@ -53,16 +53,19 @@ public class Statistics
         IsGettedStatistic = true;
 
         string textIngformation = $"Заявок не обработано: {countUnprocessedDetails}\n" +
-                                  $"Обработанные заявки  + {countUsedDetails}\n" +
-                                  $"Отказанные заявки  {countRejectionDetails}\n" +
+                                  $"Обработанные заявки: {countUsedDetails}\n" +
+                                  $"Отказанные заявки: {countRejectionDetails}\n" +
                                   $"Заявок всего: {countAllDetails}\n" +
                                   $"Процент обработанных заявок: {PercentUsedDetails}\n" +
                                   $"Процент отказанных заявок: {PercentRejectionDetails}\n" +
-                                  $"Процент не обработанных заявок: {PercentUnprocessedDetails}\n \n";
-        
-        
-        
-        
+                                  $"Процент не обработанных заявок: {PercentUnprocessedDetails}\n";
+
+        for (int i = 0; i < TimeWorkingDiveces.Count; i++)
+        {
+            textIngformation += $"Среднее время работы устройства под номером {i + 1}: {(double)TimeWorkingDiveces[i].Sum()/TimeWorkingDiveces[i].Count}\n";
+            if (i == TimeWorkingDiveces.Count - 1)
+                textIngformation += "\n";
+        }
         TimeWorkingStatitsticsGet?.Invoke(TimeWorkingDiveces);
         TextStatisticGet?.Invoke(textIngformation);
         EffectivityStatisticsGet?.Invoke(EffectivityStatistics);
