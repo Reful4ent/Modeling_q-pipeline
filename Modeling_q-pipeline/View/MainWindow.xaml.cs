@@ -42,7 +42,7 @@ public partial class MainWindow : Window
         int countOfDevices = Convert.ToInt32(Modeling_DevCount.Text.ToString());
         int bufferSize = Convert.ToInt32(Modeling_BufSize.Text.ToString());
         statistics.SetStartStatistics(countOfDevices);
-        await pipeline.Start(time, countOfDevices, bufferSize);
+        await pipeline.StartAsync(time, countOfDevices, bufferSize);
         statistics.SetMainStatistics();
     }
 

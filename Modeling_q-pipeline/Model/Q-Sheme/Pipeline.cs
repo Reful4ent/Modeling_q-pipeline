@@ -10,7 +10,7 @@ public class Pipeline
         this.statistics = statistics;
     }
     
-    public async Task Start(int time, int countOfDevices, int bufferSize)
+    public async Task StartAsync(int time, int countOfDevices, int bufferSize)
     {
         countAllDetails = 0;
         if (statistics.IsGettedStatistic)
@@ -41,7 +41,7 @@ public class Pipeline
                 foreach (var device in devices)
                 {
                     if (device.State == true)
-                    {
+                    {   
                         device.MoveTime();
                         if (device.State == false && device.DetailOnDevice != null)
                         {
@@ -124,12 +124,15 @@ public class Pipeline
                                     break;
                                 if(buffers[j].PutDetail(detailOnPipeline[j][0])) 
                                     detailOnPipeline[j] = ChangeRequest(detailOnPipeline[j]);
-                            }
+                            }   
                         }
                     }
                 }
-                statistics.EffectivityStatistics.Add(i,((double)usedDetails.Count/countAllDetails));
+                statistics.EffectivityStatistics.Add(i,(double)usedDetails.Count/countAllDetails);
+                //Console.WriteLine(i+ " " + (double)usedDetails.Count/countAllDetails);
             }
+            
+            
             
             for (int j = 0; j < devices.Count; j++)
             {
@@ -157,7 +160,7 @@ public class Pipeline
     //Добавляет детали в список каждую минуту с равномерным распределением от 0 до 4
     public Detail[] SetRequest()
     {
-        int countDetailsPerMinute = random.Next(1, 5);
+        int countDetailsPerMinute = random.Next(1, 4);
         Detail[] tempDetails = new Detail[countDetailsPerMinute];
         countAllDetails += countDetailsPerMinute;
         for (int j = 0; j < countDetailsPerMinute; j++)
@@ -181,11 +184,11 @@ public class Pipeline
     //Устанавливает время работы устройства по экспонециальному закону
     public Device SetExpTime(Device device, Detail detail)
     {
-        int MathExpectation = 1;
+        int MathExpectation = 4;
         int time = Convert.ToInt32(
             Math.Ceiling(
-                (-MathExpectation) * Math.Log(random.NextDouble())));
-        
+                (-MathExpectation) * Math.Log(1-random.NextDouble())));
+        Console.WriteLine(time);
         device.SetWork(detail, time);
         return device;
     }

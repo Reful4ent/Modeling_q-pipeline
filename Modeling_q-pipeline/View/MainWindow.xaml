@@ -8,7 +8,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         WindowStartupLocation="CenterScreen"
-        Icon="Img/graphs.png">
+        Icon="Img/graphs.png"
+        >
     <Window.Resources>
         <ResourceDictionary Source="StylesFolder/Styles.xaml"></ResourceDictionary>
     </Window.Resources>
