@@ -1,7 +1,5 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modeling_q-pipeline", "Modeling_q-pipeline\Modeling_q-pipeline.csproj", "{6B556803-E6A4-4D1A-B8B0-346E9E1A40BE}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modeling_Console", "Modeling_Console\Modeling_Console.csproj", "{3E1FAC31-A6A4-4A90-9916-5A77BBE176BF}"
 EndProject
 Global
@@ -10,10 +8,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6B556803-E6A4-4D1A-B8B0-346E9E1A40BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6B556803-E6A4-4D1A-B8B0-346E9E1A40BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6B556803-E6A4-4D1A-B8B0-346E9E1A40BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6B556803-E6A4-4D1A-B8B0-346E9E1A40BE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3E1FAC31-A6A4-4A90-9916-5A77BBE176BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3E1FAC31-A6A4-4A90-9916-5A77BBE176BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E1FAC31-A6A4-4A90-9916-5A77BBE176BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
