@@ -18,5 +18,5 @@ public interface IStatistics
 
     public void SetMainStatistics();
 
-    public void ResetStatistic(int countOfDevices);
+    public void ResetStatistic();
 }

@@ -121,7 +121,7 @@ public class Courier
                     orders.Peek().IsRefused = true;
                     IsDisturbance = false;
                     TimeOfDisturbance = -1;
-                    Console.WriteLine($"Отмена заказа");
+                    //Console.WriteLine($"Отмена заказа");
                 }
                 else if (IsCycleBroke)
                 {
@@ -130,7 +130,7 @@ public class Courier
                     orders.Peek().TimeOfDelivery *= 2;
                     IsCycleBroke = false;
                     TimeOfDisturbance = -1;
-                    Console.WriteLine($"Велик сломался!");
+                    //Console.WriteLine($"Велик сломался!");
                 }
             }
             if (!IsReturning)

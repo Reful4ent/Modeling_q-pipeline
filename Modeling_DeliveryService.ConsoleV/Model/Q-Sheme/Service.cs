@@ -5,7 +5,7 @@ namespace Modeling_DeliveryService.ConsoleV.Model;
 public class Service
 {
     private Random random = new();
-    private IStatistics statistics;
+    public IStatistics statistics;
     private int countAllOrders = 0;
 
     public Service(IStatistics statistics)
@@ -20,6 +20,7 @@ public class Service
         int countUsedOrders = 0;
         int countRejectionOrders = 0;
         int countOfUnprocessedOrders = 0;
+        countAllOrders = 0;
         for(int i = 0; i < countOfCouriers; i++)
             couriersList.Add(new Courier());
 
@@ -72,7 +73,7 @@ public class Service
         statistics.CountUnprocessedDetails = countOfUnprocessedOrders;
         statistics.CountUsedDetails = countUsedOrders;
         statistics.CountAllDetails = countAllOrders;
-        Console.WriteLine($"Кол-во обработанных заявок:{countUsedOrders}\nКол-во откказанных заявок:{countRejectionOrders}\nКол-во необработанных заявок: {countOfUnprocessedOrders}\nКол-во всех заявок:{countAllOrders}");
+        //Console.WriteLine($"Кол-во обработанных заявок:{countUsedOrders}\nКол-во откказанных заявок:{countRejectionOrders}\nКол-во необработанных заявок: {countOfUnprocessedOrders}\nКол-во всех заявок:{countAllOrders}");
     }
     
     private void SetRequest(Queue<Order> orderListToAdd)

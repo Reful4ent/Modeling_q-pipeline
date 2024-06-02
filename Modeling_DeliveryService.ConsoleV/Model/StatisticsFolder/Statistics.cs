@@ -55,7 +55,7 @@ public class Statistics : IStatistics
         EffectivityStatisticsGet?.Invoke(EffectivityStatistics);
     }
 
-    public void ResetStatistic(int countOfDevices)
+    public void ResetStatistic()
     {
         EffectivityStatistics.Clear();
         CountUsedDetails = 0;
