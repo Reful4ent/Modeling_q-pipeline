@@ -28,7 +28,7 @@ public partial class MainWindow : Window
         service = new Service(statistics);
         statistics.EffectivityStatisticsGet += DrawDots;
         Graphics.Plot.XLabel("Время моделирования");
-        Graphics.Plot.YLabel("Процент обработанных заявок");
+        Graphics.Plot.YLabel("Доля обработанных заявок");
     }
 
     private async void ButtonBase_OnClick(object sender, RoutedEventArgs e)
