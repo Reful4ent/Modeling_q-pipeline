@@ -1,7 +1,7 @@
-﻿<Application x:Class="Modeling_q_pipeline.App"
+﻿<Application x:Class="Modeling_DeliveryService.WPFV.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Modeling_q_pipeline"
+             xmlns:local="clr-namespace:Modeling_DeliveryService.WPFV"
              StartupUri="/View/MainWindow.xaml">
     <Application.Resources>
          

@@ -22,10 +22,6 @@
             <RowDefinition Height="20px"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <Menu Grid.Row="0" Grid.ColumnSpan="2">
-            <MenuItem Header="Другие графики" Click="MenuItemOthers_OnClick"></MenuItem>
-            <MenuItem Header="Общая статистика" Click="MenuItemStatistic_OnClick"></MenuItem>
-        </Menu>
         <Grid Grid.Column="0" Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
@@ -59,26 +55,13 @@
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition Width="0.4*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" VerticalAlignment="Center">Количество устройств</TextBlock>
+                <TextBlock Grid.Column="0" VerticalAlignment="Center">Количество курьеров</TextBlock>
                 <TextBox Grid.Column="1" x:Name="Modeling_DevCount"
                          Height="30px"
                          Margin="0 0 10 0"
                          TextAlignment="Center"
                          VerticalContentAlignment="Center"
                          VerticalAlignment="Center"></TextBox>
-            </Grid>
-            <Grid Grid.Row="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition Width="0.4*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" VerticalAlignment="Center">Размер буфера</TextBlock>
-                <TextBox Grid.Column="1"   x:Name="Modeling_BufSize"
-                                          Height="30px"
-                                          Margin="0 0 10 0"
-                                          TextAlignment="Center"
-                                          VerticalContentAlignment="Center"
-                                          VerticalAlignment="Center"></TextBox>
             </Grid>
             <Button Grid.Row="3" Click="ButtonBase_OnClick" Style="{StaticResource Button_style}">Смоделировать</Button>
         </Grid>

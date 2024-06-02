@@ -8,8 +8,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Modeling_DeliveryService.ConsoleV.Model;
 using Modeling_q_pipeline.Model;
-using Modeling_q_pipeline.View;
+using Modeling_q_pipeline;
 
 namespace Modeling_q_pipeline;
 
@@ -19,19 +20,13 @@ namespace Modeling_q_pipeline;
 public partial class MainWindow : Window
 {
     private IStatistics statistics;
-    private Pipeline pipeline;
-    private AdditionalWindow additionalWindow;
-    private TextStatisticWindow textStatisticWindow;
+    private Service service;
     public MainWindow()
     {
         InitializeComponent();
         statistics = Statistics.Instance();
-        pipeline = new Pipeline(statistics);
-        additionalWindow = new AdditionalWindow();
-        textStatisticWindow = new TextStatisticWindow();
+        service = new Service(statistics);
         statistics.EffectivityStatisticsGet += DrawDots;
-        statistics.TimeWorkingStatitsticsGet += SetOtherStatistics;
-        statistics.TextStatisticGet += SetTextStatistic;
         Graphics.Plot.XLabel("Время моделирования");
         Graphics.Plot.YLabel("Процент обработанных заявок");
     }
@@ -40,9 +35,7 @@ public partial class MainWindow : Window
     {
         int time = Convert.ToInt32(Modeling_Time.Text.ToString());
         int countOfDevices = Convert.ToInt32(Modeling_DevCount.Text.ToString());
-        int bufferSize = Convert.ToInt32(Modeling_BufSize.Text.ToString());
-        statistics.SetStartStatistics(countOfDevices);
-        await pipeline.StartAsync(time, countOfDevices, bufferSize);
+        await service.StartAsync(time, countOfDevices);
         statistics.SetMainStatistics();
     }
 
@@ -53,36 +46,17 @@ public partial class MainWindow : Window
         var sp = Graphics.Plot.Add.Scatter(time, data);
         Graphics.Plot.Axes.SetLimits(time[0],time[time.Length-1],0,1);
         Graphics.Plot.Axes.AutoScale();
-        sp.LegendText = $"{Modeling_DevCount.Text} : {Modeling_BufSize.Text} : {Modeling_Time.Text}";
+        sp.LegendText = $"{Modeling_DevCount.Text} :  {Modeling_Time.Text}";
         Graphics.Plot.ShowLegend();
         Graphics.Refresh();
     }
-
-    private void SetOtherStatistics(List<List<int>> TimeWorkingStatitstics)
-    {
-        additionalWindow.GetStatistic(TimeWorkingStatitstics);
-    }
-
-    private void SetTextStatistic(string text)
-    {
-        textStatisticWindow.GetStatistic(text);
-    }
     
-    private void MenuItemOthers_OnClick(object sender, RoutedEventArgs e)
-    {
-        additionalWindow.Show();
-    }
+    
 
     private void ClearPlot(object sender, RoutedEventArgs e)
     {
         Graphics.Plot.Clear();
         Graphics.Refresh();
-        textStatisticWindow.Clear();
-        additionalWindow.Clear();
     }
-
-    private void MenuItemStatistic_OnClick(object sender, RoutedEventArgs e)
-    {
-        textStatisticWindow.Show();
-    }
+    
 }

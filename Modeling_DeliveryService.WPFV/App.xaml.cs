@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows;
 
-namespace Modeling_q_pipeline;
+namespace Modeling_DeliveryService.WPFV;
 
 /// <summary>
 /// Interaction logic for App.xaml
