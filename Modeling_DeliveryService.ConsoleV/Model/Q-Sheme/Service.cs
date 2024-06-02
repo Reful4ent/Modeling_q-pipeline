@@ -1,15 +1,25 @@
+using Modeling_q_pipeline.Model;
+
 namespace Modeling_DeliveryService.ConsoleV.Model;
 
 public class Service
 {
     private Random random = new();
+    private IStatistics statistics;
     private int countAllOrders = 0;
 
+    public Service(IStatistics statistics)
+    {
+        this.statistics = statistics;
+    }
+    
     public void Start(int time, int countOfCouriers)
     {
         Queue<Order> orderList = new();
         List<Courier> couriersList = new();
         int countUsedOrders = 0;
+        int countRejectionOrders = 0;
+        int countOfUnprocessedOrders = 0;
         for(int i = 0; i < countOfCouriers; i++)
             couriersList.Add(new Courier());
 
@@ -21,7 +31,15 @@ public class Service
             {
                 if (couriersList[j].MoveTime())
                 {
-                    countUsedOrders += couriersList[j].DeliveredOrders.Count();
+                    for (int k = 0; k < couriersList[j].DeliveredOrders.Count; k++)
+                    {
+                        if (couriersList[j].DeliveredOrders.Peek().IsRefused)
+                            countRejectionOrders += 1;
+                        else
+                            countUsedOrders += 1;
+                        couriersList[j].DeliveredOrders.Dequeue();
+                        k--;
+                    }
                 }
             }
             
@@ -41,8 +59,20 @@ public class Service
                     courier.SetCourier(tempList);
                 }
             }
+            statistics.EffectivityStatistics.Add(i,(double)countUsedOrders/countAllOrders);
         }
-        Console.WriteLine($"Кол-во обработанных заявок:{countUsedOrders}\nКол-во всех заявок:{countAllOrders}");
+
+        for (int d = 0; d < couriersList.Count; d++)
+        {
+            if (couriersList[d].DeliveredOrders.Count == 0)
+                countOfUnprocessedOrders += couriersList[d].Orders.Count();
+        }
+        countOfUnprocessedOrders += orderList.Count;
+        statistics.CountRejectionDetails = countRejectionOrders;
+        statistics.CountUnprocessedDetails = countOfUnprocessedOrders;
+        statistics.CountUsedDetails = countUsedOrders;
+        statistics.CountAllDetails = countAllOrders;
+        Console.WriteLine($"Кол-во обработанных заявок:{countUsedOrders}\nКол-во откказанных заявок:{countRejectionOrders}\nКол-во необработанных заявок: {countOfUnprocessedOrders}\nКол-во всех заявок:{countAllOrders}");
     }
     
     private void SetRequest(Queue<Order> orderListToAdd)
@@ -62,8 +92,4 @@ public class Service
         return new Order(time);
     }
 
-    public bool CheckCourierIsFree(List<Courier> couriers)
-    {
-        return true;
-    }
 }

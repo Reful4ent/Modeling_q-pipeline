@@ -4,6 +4,7 @@ public class Order
 {
     private bool isDelivered = false;
     private bool isDelivering = false;
+    private bool isRefused = false;
     private int timeOfDelivery = 0;
 
     public bool IsDelivered
@@ -16,6 +17,12 @@ public class Order
     {
         get => isDelivering;
         private set => isDelivering = value;
+    }
+    
+    public bool IsRefused
+    {
+        get => isRefused;
+        set => isRefused = value;
     }
 
     public int TimeOfDelivery
@@ -35,6 +42,7 @@ public class Order
             return false;
         IsDelivered = false;
         IsDelivering = true;
+        IsRefused = false;
         TimeOfDelivery = timeOfDelivery;
         return true;
     }
@@ -49,4 +57,5 @@ public class Order
         TimeOfDelivery = 0;
         return true;
     }
+    
 }

@@ -53,10 +53,10 @@ public class Courier
         private set => isReturning = value;
     }
     
-    public bool IsDisturbance
+    public bool IsCycleBroke
     {
-        get => isDisturbance;
-        private set => isDisturbance = value;
+        get => isCycleBroke;
+        private set => isCycleBroke = value;
     }
     
     public int TimeOfDisturbance
@@ -64,6 +64,13 @@ public class Courier
         get => timeOfDisturbance;
         private set => timeOfDisturbance = value;
     }
+    
+    public bool IsDisturbance
+    {
+        get => isDisturbance;
+        private set => isDisturbance = value;
+    }
+
     
     public int IndexOrder
     {
@@ -82,6 +89,9 @@ public class Courier
         DeliveredOrders.Clear();
         Orders.Clear();
         DeliveryTimes.Clear();
+        IsDisturbance = false;
+        IsCycleBroke = false;
+        TimeOfDisturbance = 0;
         foreach (var order in orders)
         {
             timeOfWorking += order.TimeOfDelivery * 2;
@@ -93,33 +103,34 @@ public class Courier
         IsReturning = false;
         return true;
     }
-
+    
     public bool MoveTime()
     {
         if (IsWorking)
         {
             TimeOfWorking -= 1;
-            if(IsDisturbance || isCycleBroke)
+            if(IsDisturbance || IsCycleBroke)
                 TimeOfDisturbance -= 1;
-            if (TimeOfDisturbance == 0)
+            if (TimeOfDisturbance == 0 && (IsDisturbance || IsCycleBroke))
             {
                 if (IsDisturbance)
-                {
+                { 
                     TimeOfWorking /= 2;
                     DeliveryTimes[IndexOrder] /= 2;
                     orders.Peek().TimeOfDelivery /= 2;
+                    orders.Peek().IsRefused = true;
                     IsDisturbance = false;
                     TimeOfDisturbance = -1;
-                    Console.WriteLine("Отмена заказа");
+                    Console.WriteLine($"Отмена заказа");
                 }
-                else if (isCycleBroke)
+                else if (IsCycleBroke)
                 {
                     TimeOfWorking += DeliveryTimes[IndexOrder] * 2;
                     DeliveryTimes[IndexOrder] *= 2;
                     orders.Peek().TimeOfDelivery *= 2;
-                    isCycleBroke = false;
+                    IsCycleBroke = false;
                     TimeOfDisturbance = -1;
-                    Console.WriteLine("Велик сломался!");
+                    Console.WriteLine($"Велик сломался!");
                 }
             }
             if (!IsReturning)
@@ -129,7 +140,7 @@ public class Courier
                 {
                     if (order.MoveTime() && order.IsDelivered)
                     {
-                        flag = true; 
+                        flag = true;
                         deliveredOrders.Enqueue(order);
                         if (orders.Count > 1)
                             IndexOrder += 1;
@@ -148,12 +159,14 @@ public class Courier
                 IsReturning = false;
                 IndexOrder = 0;
                 TimeOfDisturbance = 0;
+                IsDisturbance = false;
+                IsCycleBroke = false;
                 return true;
             }
         }
         return false;
     }
-
+    
     private void SetDisturbance()
     {
         Random random = new Random();
@@ -167,17 +180,19 @@ public class Courier
                 number *= random.NextDouble();
                 counter++;
             }
-            if (counter > 8)
+            if (counter > 7)
             {
                 double checkDistrubance = random.NextDouble();
                 if (checkDistrubance < 0.5d)
                 {
                     IsDisturbance = true;
+                    IsCycleBroke = false;
                     TimeOfDisturbance = random.Next(0, timeOfWorking);
                 }
                 else
                 {
-                    isCycleBroke = true;
+                    IsCycleBroke = true;
+                    IsDisturbance = false;
                     TimeOfDisturbance = random.Next(0, timeOfWorking);
                 }
             }
